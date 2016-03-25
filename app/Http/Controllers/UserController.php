@@ -2,12 +2,17 @@
 
 namespace Incident\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Incident\Http\Controllers\BaseController;
 use Incident\Models\User as User;
 use Incident\Http\Requests;
+
 use JWTAuth;
-use Incident\Http\Controllers\BaseController;
+use Hash;
+
 use Tymon\JWTAuth\Exceptions\JWTException;
+
+use Illuminate\Http\Request;
+
 
 class UserController extends BaseController
 {
@@ -66,5 +71,26 @@ class UserController extends BaseController
         } catch (JWTException $ex) {
             return response()->json('could_not_invalidate_token', 500);
         }
+    }
+
+
+    /**
+     * Se sobreescribe este metodo solo para encriptar la contraseña del usuario.
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
+        $this->validate($request, User::rules(), $this->getMessages($request->header('Lang')));
+
+        $user = $request->all();
+
+        //Se encripta la contraseña antes de enviarla a la BD
+        $user['password'] = bcrypt($user['password']);
+
+        $response = User::create($user);
+
+        return response()->json($response, 201);
     }
 }

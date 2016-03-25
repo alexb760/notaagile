@@ -15,7 +15,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     protected $table = "users";
     protected $fillable = [
-        'email', 'nombre', 'password', 'usuario'
+        'email', 'nombre', 'password', 'usuario', 'isActive'
     ];
 
     /**
@@ -24,7 +24,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','isActive',
+        'password', 'remember_token', 'isActive',
+    ];
+
+    /**
+     *
+     */
+    protected $casts = [
+        'isActive' => 'boolean',
     ];
 
 
@@ -32,13 +39,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * Validaciones para los campos de la tabla
      * @return array
      */
-    public static function rules(){
+    public static function rules()
+    {
         return [
             'nombre' => 'required|max:100',
-            'usuario' => 'required|unique:users|max:200|min:6',
-            'password' =>'required|min:8',
-            'email' =>'required|email',
-            'isActive' =>'required|boolean'
+            'usuario' => 'required|unique:users,usuario|max:200|min:6',
+            'password' => 'required|min:8',
+            'email' => 'required|email',
+            'isActive' => 'required|boolean'
         ];
     }
+
+
 }

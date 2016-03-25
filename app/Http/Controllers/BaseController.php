@@ -3,13 +3,19 @@
 namespace Incident\Http\Controllers;
 
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
 
+use Incident\Helppers\Messages as Messages;
+use Illuminate\Support\Facades\DB;
 use Incident\Http\Requests;
+
 use Incident\Http\Controllers\Controller;
+use Mockery\CountValidator\Exception;
+
 
 class BaseController extends Controller
 {
@@ -53,9 +59,7 @@ class BaseController extends Controller
      */
     public function store(Request $request)
     {
-
-
-        $this->validate($request, $this->baseModel::rules());
+        $this->validate($request, $this->baseModel::rules(), $this->getMessages($request->header($request->header('Lang'))));
 
         $obj_model = new $this->baseModel;
 
@@ -70,7 +74,15 @@ class BaseController extends Controller
      */
     public function show($id)
     {
-        return $this->baseModel::findOrFail($id);
+        try {
+
+            return $this->baseModel::findOrFail($id);
+
+        } catch (ModelNotFoundException $ex) {
+
+            $this->storeError();
+        }
+
     }
 
     /**
@@ -107,9 +119,9 @@ class BaseController extends Controller
         $response = $this->baseModel::destroy($id);
 
         if ($response == 1) {
-            return "OK";
+            return response()->json("OK", 200);
         } else {
-            return "ERROR";
+            return response()->json("ERROR", 500);
         }
     }
 
@@ -117,4 +129,27 @@ class BaseController extends Controller
     {
         return $validator->errors()->all();
     }
+
+    /**
+     * Metodo que se encarga de traducir los mensajes de error de Eloquent
+     * @param $lang Lenguaje
+     * @return $Array Array con los mensajes traducidos.
+     */
+    protected function getMessages($lang)
+    {
+
+        //Valido si el lenguaje existe, si no existe se trabaja con el ingles
+        if (!array_key_exists($lang, Messages::$mensajes)) {
+            $lang = "EN";
+        }
+
+        return Messages::$mensajes[$lang];
+    }
+
+
+    protected function storeError()
+    {
+        dd(DB::getQueryLog());
+    }
+
 }
