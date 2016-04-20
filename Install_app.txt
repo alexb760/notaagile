@@ -1,0 +1,9 @@
+bower install angular-route
+
+bower install a0-angular-storage
+
+bower install angular-jwt
+
+bower install bootstrap
+
+https://uno-de-piera.com/autenticacion-con-jwt-php-y-angularjs/
