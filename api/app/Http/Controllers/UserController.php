@@ -2,7 +2,6 @@
 
 namespace Incident\Http\Controllers;
 
-use Incident\Http\Controllers\BaseController;
 use Incident\Models\User as User;
 use Incident\Http\Requests;
 
@@ -17,11 +16,7 @@ use Illuminate\Http\Request;
 class UserController extends BaseController
 {
 
-
-    public function __construct()
-    {
-        parent::__construct('User');
-    }
+    protected $model ="Incident\\Models\\User";
 
     /**
      * Controla el inicio de sesion en la aplicacion.

@@ -15,7 +15,7 @@ class UserTableSeeder extends Seeder
             'nombre'=>'admin',
             'usuario'=>'admin',
             'email'=>'admin@incident.com',
-            'password'=>bcrypt('secret'),
+            'password'=>bcrypt('admin'),
             'isActive'=>true,
         ]);
     }
