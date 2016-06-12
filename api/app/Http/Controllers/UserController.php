@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 class UserController extends BaseController
 {
 
-    protected $model ="Incident\\Models\\User";
+    protected $model = "Incident\\Models\\User";
 
     /**
      * Controla el inicio de sesion en la aplicacion.
@@ -26,7 +26,7 @@ class UserController extends BaseController
     public function login(Request $request)
     {
         // credenciales para loguear al usuario
-        $credentials = $request->only('usuario', 'password');
+        $credentials = $request->only('email', 'password');
 
         try {
             // si los datos de login no son correctos
@@ -38,7 +38,7 @@ class UserController extends BaseController
         }
 
         //Obtenemos la información del usuario
-        $user = User::where('usuario', "=", $request->input('usuario'))->get()->toArray();
+        $user = User::where('email', "=", $request->input('email'))->get()->toArray();
 
         $user = $user[0];
         $user["token"] = $token;
@@ -77,15 +77,52 @@ class UserController extends BaseController
     public function store(Request $request)
     {
 
-        $this->validate($request, User::rules(), $this->getMessages($request->header('Lang')));
+        $errors = $this->validateRequest($request);
+    
+        if (count($errors) == 0) {
+            $user = $request->all();
 
-        $user = $request->all();
+            //Se encripta la contraseña antes de enviarla a la BD
+            $user['password'] = bcrypt($user['password']);
 
-        //Se encripta la contraseña antes de enviarla a la BD
-        $user['password'] = bcrypt($user['password']);
+            $response = User::create($user);
 
-        $response = User::create($user);
+            return response()->json($response, 201);
+        } else {
+            return response()->json(["error" => $errors], 400);
+        }
+    }
 
-        return response()->json($response, 201);
+    protected function getRules(Request $request)
+    {
+
+        if ($request->isMethod('post')) {
+            return [
+                'nombre' => 'required|max:100',
+                'password' => 'required|min:8',
+                'email' => 'required|email|unique:users',
+                'isActive' => 'required|boolean'
+            ];
+        } else if ($request->isMethod('put')) {
+            return ['nombre' => 'required|max:100',
+                'isActive' => 'required|boolean'
+            ];
+        }
+
+        return array();
+
+    }
+
+    protected function getMessages()
+    {
+        return [
+            'nombre.required' => "El nombre es requerido.",
+            'email.required' => 'El email es requerido.',
+            'isActive.required' => 'El campo isActive es requerido.',
+            'nombre.max' => 'El nombre debe tener maximo :max catacteres.',
+            'password.min' => 'La contraseña debe tener minimo :min catacteres.',
+            'isActive.in' => 'El campo isActive debe ser del siguiente tipo: :values',
+            'email.unique' => 'El email esta duplicado'
+        ];
     }
 }

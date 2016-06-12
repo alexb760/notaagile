@@ -3,8 +3,8 @@
 namespace Incident\Http\Controllers;
 
 
-//use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Contracts\Validation\Validator;
+use Response;
+use Validator;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
 
@@ -12,12 +12,15 @@ use Illuminate\Support\Facades\DB;
 use Incident\Http\Requests;
 
 
-
-class BaseController extends Controller
+abstract class BaseController extends Controller
 {
-    use DispatchesJobs;
 
     protected $model;
+
+    abstract protected function getRules(Request $request);
+
+    abstract protected function getMessages();
+
 
     /**
      * Display a listing of the resource.
@@ -26,7 +29,7 @@ class BaseController extends Controller
      */
     function index()
     {
-        return call_user_func($this->model.'::all');
+        return call_user_func($this->model . '::all');
     }
 
     /**
@@ -37,11 +40,19 @@ class BaseController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, call_user_func($this->model,'rules'), $this->getMessages($request->header($request->header('Lang'))));
+        $errors = $this->validateRequest($request);
 
-        // $obj_model = new $this->baseModel;
+        if (count($errors) == 0) {
 
-        // return call_user_func($this->model,'create',$request->all());
+            $response = call_user_func($this->model . '::create', $request->all());
+
+            return call_user_func($this->model . '::find', $response);
+
+        } else {
+            return response()->json(["error" => $errors], 400);
+
+        }
+
     }
 
     /**
@@ -53,23 +64,11 @@ class BaseController extends Controller
     public function show($id)
     {
 
-        $searchResult = call_user_func($this->model.'::find',$id);
+        $searchResult = call_user_func($this->model . '::find', $id);
 
-        if($searchResult == null)
-            return response()->json(["error"=>"no_data_found"],400);
+        if ($searchResult == null)
+            return response()->json(["error" => "no_data_found"], 400);
         return $searchResult;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**
@@ -80,36 +79,35 @@ class BaseController extends Controller
      */
     public function destroy($id)
     {
-        /*$response = call_user_func($this->model,'destroy',$id);
 
-            //$this->baseModel::destroy($id);
+        $searchResult = call_user_func($this->model . '::find', $id);
 
-        if ($response == 1) {
-            return response()->json("OK", 200);
-        } else {
-            return response()->json("ERROR", 500);
-        }*/
-    }
+        if (isset($searchResult)){
+            $response = call_user_func($this->model.'::destroy',$id);
 
-    protected function formatValidationErrors(Validator $validator)
-    {
-        //return $validator->errors()->all();
-    }
-
-    /**
-     * Metodo que se encarga de traducir los mensajes de error de Eloquent
-     * @param $lang Lenguaje
-     * @return $Array Array con los mensajes traducidos.
-     */
-    protected function getMessages($lang)
-    {
-
-        /*//Valido si el lenguaje existe, si no existe se trabaja con el ingles
-        if (!array_key_exists($lang, Messages::$mensajes)) {
-            $lang = "EN";
+            if ($response == 1) {
+                return response()->json("OK", 200);
+            } else {
+                return response()->json("ERROR", 400);
+            }
+        }else{
+            return response()->json(["error" => "no_data_found"], 400);
         }
 
-        return Messages::$mensajes[$lang];*/
+    }
+
+    protected function validateRequest(Request $request)
+    {
+
+
+        $validator = Validator::make($request->all(), $this->getRules($request), $this->getMessages());
+
+        if ($validator->fails()) {
+
+            return $errors = $validator->errors()->all();
+        }
+
+        return array();
     }
 
 

@@ -13,7 +13,6 @@ class UserTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             'nombre'=>'admin',
-            'usuario'=>'admin',
             'email'=>'admin@incident.com',
             'password'=>bcrypt('admin'),
             'isActive'=>true,
