@@ -20,6 +20,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'email', 'nombre', 'password', 'isActive'
     ];
 
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -36,5 +37,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'isActive' => 'boolean',
     ];
 
+    public static function getUpdatable()
+    {
+        return [
+            'nombre', 'isActive','email'
+        ];
+    }
 
 }

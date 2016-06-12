@@ -105,7 +105,8 @@ class UserController extends BaseController
             ];
         } else if ($request->isMethod('put')) {
             return ['nombre' => 'required|max:100',
-                'isActive' => 'required|boolean'
+                'isActive' => 'required|boolean',
+                'email' => 'required|email|unique:users,email,'.$request->input('id'),
             ];
         }
 
