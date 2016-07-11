@@ -16,8 +16,16 @@ Route::group(['middleware' => 'cors'], function () {
  * Todas las rutas que deben proporcionar el token de autenticacion.
  */
 Route::group(['middleware' => ['cors', 'jwt.auth']], function() {
-	Route::resource('user','UserController');
 
+    //Rutas de seguridad
 	Route::get("/logout","UserController@logout");
-	
+	Route::get("/renewToken","UserController@renewToken");
+
+    //CRUD y control de los datos de los usuarios
+    Route::resource('user','UserController');
+
+
+    //CRUD y control de los datos de los perfiles
+    Route::resource('profile','ProfileController');
+
 });

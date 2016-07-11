@@ -37,11 +37,5 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'isActive' => 'boolean',
     ];
 
-    public static function getUpdatable()
-    {
-        return [
-            'nombre', 'isActive','email'
-        ];
-    }
 
 }

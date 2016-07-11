@@ -8,7 +8,6 @@ use Validator;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\DB;
 use Incident\Http\Requests;
 
 
@@ -16,6 +15,12 @@ abstract class BaseController extends Controller
 {
 
     protected $model;
+
+    //Columnas customs que se agregan en el modelo, como por ejemplo la información de las foraneas
+    protected $eager = array();
+
+    //Columnas que pueden ser actualizados
+    protected $updatable = array();
 
     abstract protected function getRules(Request $request);
 
@@ -29,7 +34,11 @@ abstract class BaseController extends Controller
      */
     function index()
     {
-        return call_user_func($this->model . '::all');
+
+        if (is_array($this->eager) && count($this->eager) > 0)
+            return response()->json(call_user_func($this->model . '::with', $this->eager)->get());
+
+        return response()->json(call_user_func($this->model . '::all'));
     }
 
     /**
@@ -44,9 +53,7 @@ abstract class BaseController extends Controller
 
         if (count($errors) == 0) {
 
-            $response = call_user_func($this->model . '::create', $request->all());
-
-            return call_user_func($this->model . '::find', $response);
+            return response()->json(call_user_func($this->model . '::create', $request->all()));
 
         } else {
             return response()->json(["error" => $errors], 400);
@@ -68,7 +75,7 @@ abstract class BaseController extends Controller
 
         if ($searchResult == null)
             return response()->json(["error" => "no_data_found"], 400);
-        
+
         return $searchResult;
     }
 
@@ -86,11 +93,11 @@ abstract class BaseController extends Controller
         if (isset($searchResult)) {
             $response = call_user_func($this->model . '::destroy', $id);
 
-            if ($response == 1) {
+            if ($response == 1)
                 return response()->json("OK", 200);
-            } else {
+            else
                 return response()->json("ERROR", 400);
-            }
+
         } else {
             return response()->json(["error" => "no_data_found"], 400);
         }
@@ -115,9 +122,8 @@ abstract class BaseController extends Controller
             if (isset($searchResult)) {
 
                 //Filtramos los campos que pueden ser actualizados
-                $filtro = call_user_func($this->model . '::getUpdatable');
-                if (count($filtro) > 0)
-                    $input = $request->only($filtro);
+                if (is_array($this->updatable) && count($this->updatable) > 0)
+                    $input = $request->only($this->updatable);
                 else
                     $input = $request->all();
 

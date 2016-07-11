@@ -11,12 +11,15 @@ use Hash;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 
 class UserController extends BaseController
 {
 
     protected $model = "Incident\\Models\\User";
+
+    protected $updatable = array('nombre', 'isActive','email');
 
     /**
      * Controla el inicio de sesion en la aplicacion.
@@ -50,7 +53,6 @@ class UserController extends BaseController
     /**
      * Controla el cierre de sesion en la aplicacion
      */
-
     public function logout()
     {
         try {
@@ -68,6 +70,22 @@ class UserController extends BaseController
         }
     }
 
+    /**
+     * Funcion encargada de renovar el token de la sesion.
+     */
+    public function renewToken()
+    {
+
+        $token = JWTAuth::getToken();
+        try {
+            $token = JWTAuth::refresh($token);
+
+            return response()->json(["token" => $token]);
+
+        } catch (TokenInvalidException $e) {
+            return response()->json("invalid_token", 400);
+        }
+    }
 
     /**
      * Se sobreescribe este metodo solo para encriptar la contraseña del usuario.
