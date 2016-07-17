@@ -19,7 +19,7 @@ class UserController extends BaseController
 
     protected $model = "Incident\\Models\\User";
 
-    protected $updatable = array('nombre', 'isActive', 'email');
+    protected $updatable = array('name', 'isActive', 'email');
 
     /**
      * Controla el inicio de sesion en la aplicacion.
@@ -120,13 +120,13 @@ class UserController extends BaseController
 
         if ($request->isMethod('post')) {
             return [
-                'nombre' => 'required|max:100',
+                'name' => 'required|max:100',
                 'password' => 'required|min:8',
                 'email' => 'required|email|unique:users',
                 'isActive' => 'required|boolean'
             ];
         } else if ($request->isMethod('put')) {
-            return ['nombre' => 'required|max:100',
+            return ['name' => 'required|max:100',
                 'isActive' => 'required|boolean',
                 'email' => 'required|email|unique:users,email,' . $request->input('id'),
             ];

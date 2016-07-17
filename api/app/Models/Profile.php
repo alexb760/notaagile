@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
-    protected $fillable = ['nombre', 'descripcion', 'created_by'];
+    protected $fillable = ['name', 'description', 'created_by'];
 
     public function creator()
     {

@@ -29,4 +29,7 @@ Route::group(['middleware' => ['cors', 'jwt.auth']], function () {
     Route::resource('profile', 'ProfileController');
     Route::resource('userProfile', 'UserProfileController');
 
+    //CRUD y control de los datos de las rutas
+    Route::resource('route', 'RouteController');
+
 });

@@ -12,8 +12,8 @@ class ProfileTableSeeder extends Seeder
     public function run()
     {
         \Incident\Models\Profile::create([
-            'nombre' => 'Admin',
-            'descripcion' => 'Perfil del administrador',
+            'name' => 'Admin',
+            'description' => 'Perfil del administrador',
             'created_by' => 1
         ]);
     }
