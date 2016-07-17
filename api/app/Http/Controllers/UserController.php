@@ -19,7 +19,7 @@ class UserController extends BaseController
 
     protected $model = "Incident\\Models\\User";
 
-    protected $updatable = array('nombre', 'isActive','email');
+    protected $updatable = array('nombre', 'isActive', 'email');
 
     /**
      * Controla el inicio de sesion en la aplicacion.
@@ -41,10 +41,14 @@ class UserController extends BaseController
         }
 
         //Obtenemos la información del usuario
-        $user = User::where('email', "=", $request->input('email'))->get()->toArray();
-
-        $user = $user[0];
+        $user = User::where('email', "=", $request->input('email'))->get()->first()->toArray();
         $user["token"] = $token;
+
+        //Revisamos que el usuario se encuentre activo
+        if (!$user['isActive']) {
+            JWTAuth::invalidate($user["token"]);
+            return response()->json('inactive_user', 401);
+        }
 
         //Retornamos el token y la información del usuario
         return response()->json($user, 200);
@@ -96,7 +100,7 @@ class UserController extends BaseController
     {
 
         $errors = $this->validateRequest($request);
-    
+
         if (count($errors) == 0) {
             $user = $request->all();
 
@@ -124,7 +128,7 @@ class UserController extends BaseController
         } else if ($request->isMethod('put')) {
             return ['nombre' => 'required|max:100',
                 'isActive' => 'required|boolean',
-                'email' => 'required|email|unique:users,email,'.$request->input('id'),
+                'email' => 'required|email|unique:users,email,' . $request->input('id'),
             ];
         }
 
