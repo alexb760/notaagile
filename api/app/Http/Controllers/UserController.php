@@ -17,7 +17,7 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 class UserController extends BaseController
 {
 
-    protected $model = "Incident\\Models\\User";
+    protected $model = "Incident\Models\User";
 
     protected $updatable = array('name', 'isActive', 'email');
 

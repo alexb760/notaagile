@@ -9,17 +9,17 @@ Route::group(['middleware' => 'cors'], function () {
         return view('welcome');
     });
 
-    Route::post("/login", 'UserController@login');
+    Route::post("login", 'UserController@login');
 });
 
 /**
  * Todas las rutas que deben proporcionar el token de autenticacion.
  */
-Route::group(['middleware' => ['cors', 'jwt.auth']], function () {
+Route::group(['middleware' => ['cors', 'jwt.auth', 'check_permission']], function () {
 
     //Rutas de seguridad
-    Route::get("/logout", "UserController@logout");
-    Route::get("/renewToken", "UserController@renewToken");
+    Route::get("logout", "UserController@logout");
+    Route::get("renewToken", "UserController@renewToken");
 
     //CRUD y control de los datos de los usuarios
     Route::resource('user', 'UserController');
@@ -31,5 +31,6 @@ Route::group(['middleware' => ['cors', 'jwt.auth']], function () {
 
     //CRUD y control de los datos de las rutas
     Route::resource('route', 'RouteController');
+    Route::resource('routeProfile', 'RouteController');
 
 });
