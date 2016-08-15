@@ -29,15 +29,15 @@ class CheckProfilePermission
 
         //Validamos si el perfil del usuario tiene permisos para ejecutar la peticion
         $autorized = DB::table('routes')
-            ->select(['routes.name', 'route_profile.method'])
-            ->join('route_profile', 'routes.id', '=', 'route_profile.route_id')
-            ->join('profiles', 'route_profile.profile_id', '=', 'profiles.id')
+            ->select(['routes.name', 'route_profiles.method'])
+            ->join('route_profiles', 'routes.id', '=', 'route_profiles.route_id')
+            ->join('profiles', 'route_profiles.profile_id', '=', 'profiles.id')
             ->join('user_profiles', 'profiles.id', '=', 'user_profiles.profile_id')
             ->where('user_profiles.user_id', '=', $user->id)
             ->where('routes.name', '=', $patch)
             ->where(function ($query) use ($request) {
-                $query->where('route_profile.method', '=', $request->method())
-                    ->orWhere('route_profile.method', '=', '*');
+                $query->where('route_profiles.method', '=', $request->method())
+                    ->orWhere('route_profiles.method', '=', '*');
             })
             ->groupBy('routes.name')
             ->count();

@@ -5,6 +5,7 @@ namespace Incident\Http\Controllers;
 use Incident\Models\User as User;
 use Incident\Http\Requests;
 
+use Incident\Util\MenuTree;
 use JWTAuth;
 use Hash;
 
@@ -49,6 +50,9 @@ class UserController extends BaseController
             JWTAuth::invalidate($user["token"]);
             return response()->json('inactive_user', 401);
         }
+
+        //Obtenemos el menu
+        $user["menu"] = MenuTree::getByUserId($user['id']);
 
         //Retornamos el token y la información del usuario
         return response()->json($user, 200);
