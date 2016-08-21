@@ -20,7 +20,6 @@ Route::group(['middleware' => ['cors', 'jwt.auth', 'check_permission']], functio
     //CRUD y control de los datos de los usuarios
     Route::resource('user', 'UserController');
 
-
     //CRUD y control de los datos de los perfiles
     Route::resource('profile', 'ProfileController');
     Route::resource('userProfile', 'UserProfileController');
@@ -28,6 +27,10 @@ Route::group(['middleware' => ['cors', 'jwt.auth', 'check_permission']], functio
     //CRUD y control de los datos de las rutas
     Route::resource('route', 'RouteController');
     Route::resource('routeProfile', 'RouteController');
+
+    //CRUD y control del idioma
+    Route::resource("lang", "LangController");
+    Route::resource("labelLang", "LabelLangController");
 
 });
 
@@ -41,5 +44,8 @@ Route::group(['middleware' => ['cors', 'check_token']], function () {
     //Rutas de seguridad
     Route::get("logout", "UserController@logout");
     Route::get("renewToken", "UserController@renewToken");
+
+    //Ruta para la traduccion de etiquetas
+    Route::get("labelsByLang/{code}", "LangController@getLabelsByLang");
 
 });

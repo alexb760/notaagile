@@ -156,7 +156,7 @@ abstract class BaseController extends Controller
                     return response()->json(["error" => "internal_error", "code_id" => $log], 500);
 
                 }
-                
+
             } else {
                 return response()->json(["error" => "no_data_found"], 400);
             }

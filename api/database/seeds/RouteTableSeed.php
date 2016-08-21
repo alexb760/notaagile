@@ -40,5 +40,22 @@ class RouteTableSeed extends Seeder
             RouteProfile::create(["method" => "*", "profile_id" => 1, "route_id" => $item->id]);
         }
 
+        $langRoutes = Route::create(["label" => "IDIOMA", "description" => "Módulo de idioma", "isVisible" => "1"]);
+
+        $routes = array(["name" => "lang", "label" => "LENGUAJE", "description" => "Administracion de lenguajes",
+            "isVisible" => "1", "parent_id" => $langRoutes->id],
+            ["name" => "labelLang", "label" => "ETIQUETAS", "description" => "Traducción de etiquetas",
+                "isVisible" => "1", "parent_id" => $langRoutes->id]
+        );
+
+        foreach ($routes as $route) {
+            $routeDB = Route::create($route);
+            array_push($routesProfile, $routeDB);
+        }
+
+        foreach ($routesProfile as $item) {
+            RouteProfile::create(["method" => "*", "profile_id" => 1, "route_id" => $item->id]);
+        }
+
     }
 }

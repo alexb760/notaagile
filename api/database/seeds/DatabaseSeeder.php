@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProfileTableSeeder::class);
         $this->call(UserProfileTableSeed::class);
         $this->call(RouteTableSeed::class);
+        $this->call(LangTableSeed::class);
     }
 }
