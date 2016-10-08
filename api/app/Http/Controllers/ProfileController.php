@@ -17,9 +17,9 @@ class ProfileController extends BaseController
     protected function getMessages()
     {
         return [
-            "nombre.required" => "El nombre es requerido",
-            "nombre.max" => "El nombre debe tener maximo :max caracteres",
-            "nombre.unique" => "El nombre esta duplicado",
+            "name.required" => "El nombre es requerido",
+            "name.max" => "El nombre debe tener maximo :max caracteres",
+            "name.unique" => "El nombre esta duplicado",
         ];
     }
 

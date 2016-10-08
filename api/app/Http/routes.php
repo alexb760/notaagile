@@ -35,6 +35,10 @@ Route::group(['middleware' => ['cors', 'jwt.auth', 'check_permission']], functio
     //CRUD y control de las asignaturas
     Route::resource("asignatura", "AsignaturaController");
 
+    //CRUD y Control de la tabla Cursos
+    Route::resource("curso","CursoController");
+
+
 });
 
 
