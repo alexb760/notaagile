@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "api.incident.dev",
-		"_postman_id": "0d602dea-2f0c-ef00-b3c4-4326de2d809d",
+		"_postman_id": "6430675e-7d29-911f-a4ff-6cfac5e4bd38",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -23,7 +23,7 @@
 						}
 					],
 					"request": {
-						"url": "http://api.srriti.dev/login",
+						"url": "http://api.notagile.com/login",
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -50,7 +50,7 @@
 				{
 					"name": "Logout",
 					"request": {
-						"url": "http://api.srriti.dev/logout",
+						"url": "http://api.notagile.com/logout",
 						"method": "GET",
 						"header": [
 							{
@@ -92,7 +92,7 @@
 						}
 					],
 					"request": {
-						"url": "http://api.srriti.dev/renewToken",
+						"url": "http://api.notagile.com/renewToken",
 						"method": "GET",
 						"header": [
 							{
@@ -125,13 +125,189 @@
 			]
 		},
 		{
+			"name": "Cursos",
+			"description": "",
+			"item": [
+				{
+					"name": "Cursos",
+					"request": {
+						"url": "http://api.notagile.com/curso",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "admin",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Post_Cursos",
+					"request": {
+						"url": "http://api.notagile.com/curso",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "anio",
+									"value": "2017",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "periodo",
+									"value": "2",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get_Cursos",
+					"request": {
+						"url": "http://api.notagile.com/curso",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Victor Andres David Quiñones",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "usuario",
+									"value": "vdavid",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "passwords",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "email",
+									"value": "vd-victor@hotmail.com",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "isActive",
+									"value": "1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_Cursos",
+					"request": {
+						"url": "http://api.notagile.com/curso/1",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Put_Curso",
+					"request": {
+						"url": "http://api.notagile.com/curso/2",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "anio",
+									"value": "2018",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "periodo",
+									"value": "1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Profiles",
 			"description": "",
 			"item": [
 				{
 					"name": "Profiles",
 					"request": {
-						"url": "http://api.srriti.dev/profile",
+						"url": "http://api.notagile.com/profile",
 						"method": "GET",
 						"header": [
 							{
@@ -164,7 +340,7 @@
 				{
 					"name": "Post_Profile",
 					"request": {
-						"url": "http://api.srriti.dev/profile",
+						"url": "http://api.notagile.com/profile",
 						"method": "POST",
 						"header": [
 							{
@@ -197,7 +373,7 @@
 				{
 					"name": "Delete_Profile",
 					"request": {
-						"url": "http://api.srriti.dev/profile/2",
+						"url": "http://api.notagile.com/profile/2",
 						"method": "DELETE",
 						"header": [
 							{
@@ -217,7 +393,7 @@
 				{
 					"name": "Put_Profile",
 					"request": {
-						"url": "http://api.srriti.dev/profile/2",
+						"url": "http://api.notagile.com/profile/2",
 						"method": "PUT",
 						"header": [
 							{
@@ -262,7 +438,7 @@
 				{
 					"name": "Routes",
 					"request": {
-						"url": "http://api.srriti.dev/route",
+						"url": "http://api.notagile.com/route",
 						"method": "GET",
 						"header": [
 							{
@@ -295,7 +471,7 @@
 				{
 					"name": "Post_Route",
 					"request": {
-						"url": "http://api.srriti.dev/route",
+						"url": "http://api.notagile.com/route",
 						"method": "POST",
 						"header": [
 							{
@@ -346,7 +522,7 @@
 				{
 					"name": "Delete_Route",
 					"request": {
-						"url": "http://api.srriti.dev/route/1",
+						"url": "http://api.notagile.com/route/1",
 						"method": "DELETE",
 						"header": [
 							{
@@ -366,7 +542,7 @@
 				{
 					"name": "Put_Route",
 					"request": {
-						"url": "http://api.srriti.dev/route/2",
+						"url": "http://api.notagile.com/route/2",
 						"method": "PUT",
 						"header": [
 							{
@@ -411,7 +587,7 @@
 				{
 					"name": "UsersProfiles",
 					"request": {
-						"url": "http://api.srriti.dev/userProfile",
+						"url": "http://api.notagile.com/userProfile",
 						"method": "GET",
 						"header": [
 							{
@@ -444,7 +620,7 @@
 				{
 					"name": "Post_UserProfile",
 					"request": {
-						"url": "http://api.srriti.dev/userProfile",
+						"url": "http://api.notagile.com/userProfile",
 						"method": "POST",
 						"header": [
 							{
@@ -477,7 +653,7 @@
 				{
 					"name": "Get_UserProfile",
 					"request": {
-						"url": "http://api.srriti.dev/userProfile/1",
+						"url": "http://api.notagile.com/userProfile/1",
 						"method": "GET",
 						"header": [
 							{
@@ -528,7 +704,7 @@
 				{
 					"name": "Delete_UserProfile",
 					"request": {
-						"url": "http://api.srriti.dev/userProfile/1",
+						"url": "http://api.notagile.com/userProfile/1",
 						"method": "DELETE",
 						"header": [
 							{
@@ -548,7 +724,7 @@
 				{
 					"name": "Put_UserProfile",
 					"request": {
-						"url": "http://api.srriti.dev/userProfile/2",
+						"url": "http://api.notagile.com/userProfile/2",
 						"method": "PUT",
 						"header": [
 							{
@@ -593,7 +769,7 @@
 				{
 					"name": "Users",
 					"request": {
-						"url": "http://api.srriti.dev/user",
+						"url": "http://api.notagile.com/user",
 						"method": "GET",
 						"header": [
 							{
@@ -626,7 +802,7 @@
 				{
 					"name": "Post_User",
 					"request": {
-						"url": "http://api.srriti.dev/user",
+						"url": "http://api.notagile.com/user",
 						"method": "POST",
 						"header": [
 							{
@@ -671,7 +847,7 @@
 				{
 					"name": "Get_User",
 					"request": {
-						"url": "http://api.srriti.dev/user/2",
+						"url": "http://api.notagile.com/user/2",
 						"method": "GET",
 						"header": [
 							{
@@ -722,7 +898,7 @@
 				{
 					"name": "Delete_User",
 					"request": {
-						"url": "http://api.srriti.dev/user/2",
+						"url": "http://api.notagile.com/user/2",
 						"method": "DELETE",
 						"header": [
 							{
@@ -742,7 +918,7 @@
 				{
 					"name": "Put_User",
 					"request": {
-						"url": "http://api.srriti.dev/user/5",
+						"url": "http://api.notagile.com/user/5",
 						"method": "PUT",
 						"header": [
 							{
