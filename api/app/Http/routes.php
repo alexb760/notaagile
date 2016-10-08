@@ -31,6 +31,9 @@ Route::group(['middleware' => ['cors', 'jwt.auth', 'check_permission']], functio
     //CRUD y control del idioma
     Route::resource("lang", "LangController");
     Route::resource("labelLang", "LabelLangController");
+    
+    //CRUD y control de las asignaturas
+    Route::resource("asignatura", "AsignaturaController");
 
 });
 
