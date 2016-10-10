@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>AngularJS con JWT</title>
-    <link rel="stylesheet" type="text/css" href="./bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/styles.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/dataurl.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css"/>
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="assets/css/fonts.googleapis.com.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="assets/css/ace-rtl.min.css"/>
+
+
+    <!-- Bower components -->
     <script type='text/javascript' src="./bower_components/angular/angular.js"></script>
     <script type='text/javascript' src="./bower_components/angular-route/angular-route.js"></script>
     <script type="text/javascript" src="./bower_components/angular-jwt/dist/angular-jwt.js"></script>
     <script type="text/javascript" src="./bower_components/a0-angular-storage/dist/angular-storage.js"></script>
-    <script type="text/javascript" src="./assets/js/pace.min.js"></script>
+    <script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/pace.min.js"></script>
+
+
     <!--archivo app.js, donde hemos definido nuestro modulo app-->
     <script type='text/javascript' src="app.js"></script>
 </head>
-<body>
-<div class="container">
-    <div ng-view></div>
-</div>
+<body ng-class="bodyLayout">
+<div ng-view></div>
 </body>
 </html>

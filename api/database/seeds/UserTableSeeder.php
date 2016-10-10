@@ -13,7 +13,7 @@ class UserTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name'=>'admin',
-            'email'=>'admin@incident.com',
+            'email'=>'admin@notagile.com',
             'password'=>bcrypt('admin'),
             'isActive'=>true,
         ]);

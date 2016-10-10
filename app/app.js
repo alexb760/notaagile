@@ -4,17 +4,15 @@
 var app = angular.module("app", ['ngRoute', 'angular-jwt', 'angular-storage']);
 
 app.constant('CONFIG', {
-        APIURL: "http://api.incident.dev/"
+        APIURL: "http://api.notagile.com"
     })
-    .config(["$routeProvider", "$httpProvider", "jwtInterceptorProvider",
-        function ($routeProvider, $httpProvider, jwtInterceptorProvider) {
-            $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+    .config(["$routeProvider", "$httpProvider", "CONFIG", "jwtInterceptorProvider",
+        function ($routeProvider, $httpProvider, CONFIG, jwtInterceptorProvider) {
 
-            //en cada petición enviamos el token a través de los headers con el nombre Authorization
-            jwtInterceptorProvider.tokenGetter = function () {
-                return localStorage.getItem('token');
-            };
-            $httpProvider.interceptors.push('jwtInterceptor');
+            //Tenemos que meter la url de la api a la lista de sitios seguros
+            jwtInterceptorProvider.whiteListedDomains = [CONFIG.APIURL];
+
+            $httpProvider.interceptors.push('requestTokenInterceptor');
 
             $routeProvider.when('/', {
                     redirectTo: "/home"
@@ -37,10 +35,16 @@ app.constant('CONFIG', {
                 authFactory.login(user).then(function (res) {
                     if (res.data) {
                         store.set('token', res.data.token);
-                        store.set('nombre', res.data.nombre);
+                        store.set('name', res.data.name);
                         store.set('email', res.data.email);
+                        store.set('menu', res.data.menu);
                         $location.path("/home");
                     }
+                }, function (res) {
+                    console.log(res);
+                    $.each(res.data, function (idx, val) {
+                        toastr.error(val);
+                    });
                 });
             }
         }])
@@ -54,13 +58,11 @@ app.constant('CONFIG', {
                     method: 'POST',
                     skipAuthorization: true,//no queremos enviar el token en esta petición
                     url: CONFIG.APIURL + '/login',
-                    data: "usuario=" + user.usuario + "&password=" + user.password,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    data: user
                 })
                     .then(function (res) {
                         deferred.resolve(res);
-                    })
-                    .then(function (error) {
+                    }, function (error) {
                         deferred.reject(error);
                     });
                 return deferred.promise;
@@ -68,32 +70,35 @@ app.constant('CONFIG', {
         }
     }])
 
-
-    .controller('homeController', ['$scope', 'CONFIG', 'jwtHelper', 'store', '$q', '$http', '$location',
-        function ($scope, CONFIG, jwtHelper, store, $q, $http, $location) {
+    .controller('homeController', ['$scope', 'CONFIG', 'store', '$q', '$http', '$location',
+        function ($scope, CONFIG, store, $q, $http, $location) {
             //obtenemos el token en localStorage
             var token = store.get("token");
             //los mandamos a la vista como user
-            $scope.user = store.get("nombre");
+            $scope.name = store.get("name");
             $scope.email = store.get("email");
+            $scope.menu = store.get("menu");
 
             $scope.logout = function () {
                 var deferred;
                 deferred = $q.defer();
                 $http({
                     method: 'GET',
-                    skipAuthorization: false,//es necesario enviar el token
-                    url: CONFIG.APIURL + 'logout'
+                    skipAuthorization: false,//no queremos enviar el token en esta petición
+                    url: CONFIG.APIURL + '/logout'
                 })
                     .then(function (res) {
                         deferred.resolve(res);
+                        store.remove("token");
+                        store.remove("name");
+                        store.remove("email");
                         $location.path("/login");
 
                     })
                     .then(function (error) {
                         console.log(error);
                         deferred.reject(error);
-                    })
+                    });
                 return deferred.promise;
             }
 
@@ -102,12 +107,32 @@ app.constant('CONFIG', {
     .run(["$rootScope", 'jwtHelper', 'store', '$location',
         function ($rootScope, jwtHelper, store, $location) {
             $rootScope.$on('$routeChangeStart', function (event, next) {
-                var token = store.get("token") || null;
-                if (!token)
+
+                if (next.originalPath == '/login') {
+                    $rootScope.bodyLayout = "login-layout blur-login";
+                } else {
+                    $rootScope.bodyLayout = "";
+                }
+
+                var token = store.get("token") || false;
+                if (!token) {
                     $location.path("/login");
+                    return true;
+                }
 
                 var bool = jwtHelper.isTokenExpired(token);
                 if (bool === true)
                     $location.path("/login");
             });
+
         }])
+
+    .factory('requestTokenInterceptor', ['store', function (store) {
+        var sessionInjector = {
+            request: function (config) {
+                config.headers['Authorization'] = "Bearer " + store.get("token") || 0;
+                return config;
+            }
+        };
+        return sessionInjector;
+    }]);

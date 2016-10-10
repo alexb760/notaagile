@@ -7,3 +7,7 @@ bower install angular-jwt
 bower install bootstrap
 
 https://uno-de-piera.com/autenticacion-con-jwt-php-y-angularjs/
+
+bower install toastr
+
+bower install angular-material
