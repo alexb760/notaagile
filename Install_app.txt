@@ -1,13 +1,9 @@
+bower install angular
+
 bower install angular-route
-
-bower install a0-angular-storage
-
-bower install angular-jwt
 
 bower install bootstrap
 
+bower install satellizer
+
 https://uno-de-piera.com/autenticacion-con-jwt-php-y-angularjs/
-
-bower install toastr
-
-bower install angular-material

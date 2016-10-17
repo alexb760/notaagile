@@ -1,18 +1,23 @@
 /**
  * Created by user on 19/04/2016.
  */
-var app = angular.module("app", ['ngRoute', 'angular-jwt', 'angular-storage']);
+var app = angular.module("app", ['ngRoute', 'satellizer', 'ngStorage']);
 
-app.constant('CONFIG', {
+app.constant('config', {
         APIURL: "http://api.notagile.com"
     })
-    .config(["$routeProvider", "$httpProvider", "CONFIG", "jwtInterceptorProvider",
-        function ($routeProvider, $httpProvider, CONFIG, jwtInterceptorProvider) {
+    .config(["$routeProvider", "config", "$authProvider",
+        function ($routeProvider, config, $authProvider) {
 
-            //Tenemos que meter la url de la api a la lista de sitios seguros
-            jwtInterceptorProvider.whiteListedDomains = [CONFIG.APIURL];
-
-            $httpProvider.interceptors.push('requestTokenInterceptor');
+            //Configuraciones referentes al token
+            $authProvider.httpInterceptor = function () {
+                return true;
+            };
+            $authProvider.loginUrl = config.APIURL + '/login';
+            $authProvider.tokenName = 'token';
+            $authProvider.tokenHeader = 'Authorization';
+            $authProvider.tokenType = 'Bearer';
+            $authProvider.storageType = 'localStorage';
 
             $routeProvider.when('/', {
                     redirectTo: "/home"
@@ -29,15 +34,15 @@ app.constant('CONFIG', {
                 })
         }])
 
-    .controller('loginController', ['$scope', 'CONFIG', 'authFactory', 'jwtHelper', 'store', '$location',
-        function ($scope, CONFIG, authFactory, jwtHelper, store, $location) {
+    .controller('loginController', ['$scope', 'config', '$auth', '$location', '$localStorage',
+        function ($scope, config, $auth, $location, $localStorage) {
+            $scope.$storage = $localStorage;
             $scope.login = function (user) {
-                authFactory.login(user).then(function (res) {
+                $auth.login(user).then(function (res) {
                     if (res.data) {
-                        store.set('token', res.data.token);
-                        store.set('name', res.data.name);
-                        store.set('email', res.data.email);
-                        store.set('menu', res.data.menu);
+                        $scope.$storage.name = res.data.name;
+                        $scope.$storage.email = res.data.email;
+                        $scope.$storage.menu = res.data.menu;
                         $location.path("/home");
                     }
                 }, function (res) {
@@ -49,35 +54,13 @@ app.constant('CONFIG', {
             }
         }])
 
-    .factory("authFactory", ["$http", "$q", "CONFIG", function ($http, $q, CONFIG) {
-        return {
-            login: function (user) {
-                var deferred;
-                deferred = $q.defer();
-                $http({
-                    method: 'POST',
-                    skipAuthorization: true,//no queremos enviar el token en esta petición
-                    url: CONFIG.APIURL + '/login',
-                    data: user
-                })
-                    .then(function (res) {
-                        deferred.resolve(res);
-                    }, function (error) {
-                        deferred.reject(error);
-                    });
-                return deferred.promise;
-            }
-        }
-    }])
-
-    .controller('homeController', ['$scope', 'CONFIG', 'store', '$q', '$http', '$location',
-        function ($scope, CONFIG, store, $q, $http, $location) {
-            //obtenemos el token en localStorage
-            var token = store.get("token");
+    .controller('homeController', ['$scope', 'config', '$localStorage', '$q', '$http', '$location',
+        function ($scope, config, $localStorage, $q, $http, $location) {
+            $scope.$storage = $localStorage;
             //los mandamos a la vista como user
-            $scope.name = store.get("name");
-            $scope.email = store.get("email");
-            $scope.menu = store.get("menu");
+            $scope.name = $scope.$storage.name;
+            $scope.email = $scope.$storage.email;
+            $scope.menu = $scope.$storage.menu;
 
             $scope.logout = function () {
                 var deferred;
@@ -85,13 +68,15 @@ app.constant('CONFIG', {
                 $http({
                     method: 'GET',
                     skipAuthorization: false,//no queremos enviar el token en esta petición
-                    url: CONFIG.APIURL + '/logout'
+                    url: config.APIURL + '/logout'
                 })
                     .then(function (res) {
                         deferred.resolve(res);
-                        store.remove("token");
-                        store.remove("name");
-                        store.remove("email");
+                        $scope.$storage.$reset();
+                        /*store.remove("satellizer_token");
+                         store.remove("menu");
+                         store.remove("name");
+                         store.remove("email");*/
                         $location.path("/login");
 
                     })
@@ -104,35 +89,26 @@ app.constant('CONFIG', {
 
         }])
 
-    .run(["$rootScope", 'jwtHelper', 'store', '$location',
-        function ($rootScope, jwtHelper, store, $location) {
+    .run(["$rootScope", '$location', '$auth',
+        function ($rootScope, $location, $auth) {
             $rootScope.$on('$routeChangeStart', function (event, next) {
 
+                var token = $auth.getToken() || false;
+
+                /*Si la URL a la que se va a acceder es el Login entonces se agrega una clase al body necesaria para
+                 la vista del login*/
                 if (next.originalPath == '/login') {
                     $rootScope.bodyLayout = "login-layout blur-login";
                 } else {
                     $rootScope.bodyLayout = "";
                 }
 
-                var token = store.get("token") || false;
-                if (!token) {
+                //La siguiente condicion controla que el usuario este autenticado, si no lo esta redirecciona al login.
+                if (!token || !$auth.isAuthenticated()) {
                     $location.path("/login");
                     return true;
                 }
 
-                var bool = jwtHelper.isTokenExpired(token);
-                if (bool === true)
-                    $location.path("/login");
             });
 
-        }])
-
-    .factory('requestTokenInterceptor', ['store', function (store) {
-        var sessionInjector = {
-            request: function (config) {
-                config.headers['Authorization'] = "Bearer " + store.get("token") || 0;
-                return config;
-            }
-        };
-        return sessionInjector;
-    }]);
+        }]);
