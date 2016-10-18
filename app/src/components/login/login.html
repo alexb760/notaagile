@@ -24,12 +24,12 @@
 
                                     <div class="space-6"></div>
 
-                                    <form name="loginForm" ng-submit="login(user)" id="loginForm">
+                                    <form name="loginForm" ng-submit="ctrl.login(ctrl.user)" id="loginForm">
                                         <fieldset>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
 															<input type="email" class="form-control" required
-                                                                   placeholder="Email" ng-model="user.email"/>
+                                                                   placeholder="Email" ng-model="ctrl.user.email"/>
 															<i class="ace-icon fa fa-user"></i>
 														</span>
                                             </label>
@@ -37,7 +37,7 @@
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
 															<input type="password" class="form-control" required
-                                                                   placeholder="Password" ng-model="user.password"/>
+                                                                   placeholder="Password" ng-model="ctrl.user.password"/>
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
                                             </label>
