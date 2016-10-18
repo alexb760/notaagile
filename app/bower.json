@@ -1,0 +1,24 @@
+{
+  "name": "appnotagile",
+  "description": "Cliente del proyecto NotAgile Ing. Sistemas.",
+  "main": "app.js",
+  "authors": [
+    "NotAgile Group"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "^1.5.8",
+    "ngstorage": "^0.3.11",
+    "toastr": "^2.1.3",
+    "satellizer": "^0.15.5",
+    "angular": "^1.5.8"
+  }
+}
