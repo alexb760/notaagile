@@ -9,8 +9,8 @@
         .constant('config', {
             APIURL: "http://api.notagile.com"
         })
-        .config(["$routeProvider", "config", "$authProvider",
-            function ($routeProvider, config, $authProvider) {
+        .config(["$routeProvider", "config", "$authProvider", "$locationProvider",
+            function ($routeProvider, config, $authProvider, $locationProvider) {
 
                 //Configuraciones referentes al token
                 $authProvider.httpInterceptor = function () {
@@ -28,14 +28,17 @@
                     .when("/home", {
                         templateUrl: 'components/home/home.html',
                         controller: 'homeController',
-                        authorization: true
+                        authorization: true,
+                        controllerAs: 'ctrl'
                     })
                     .when("/login", {
                         templateUrl: 'components/login/login.html',
                         controller: 'loginController',
                         authorization: false,
                         controllerAs: 'ctrl'
-                    })
+                    });
+
+                $locationProvider.html5Mode(true);
             }])
 
         .run(["$rootScope", '$location', '$auth',

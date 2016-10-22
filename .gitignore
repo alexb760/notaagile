@@ -1,3 +1,4 @@
 /app/bower_components/*
 /.idea/*
 /app/public/*
+/app/node_modules/*

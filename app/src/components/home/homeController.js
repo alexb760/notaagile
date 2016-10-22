@@ -22,7 +22,6 @@
             deferred = $q.defer();
             $http({
                 method: 'GET',
-                skipAuthorization: false,//no queremos enviar el token en esta petición
                 url: config.APIURL + '/logout'
             })
                 .then(function (res) {
