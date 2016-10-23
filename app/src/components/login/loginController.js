@@ -14,7 +14,6 @@
         var ctrl = this;
         ctrl.$storage = $localStorage;
         ctrl.login = function (user) {
-            console.log(user);
             $auth.login(user).then(function (res) {
                 if (res.data) {
                     ctrl.$storage.name = res.data.name;

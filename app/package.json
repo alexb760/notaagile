@@ -4,7 +4,9 @@
   "description": "Cliente del proyecto NotAgile Ing. Sistemas.",
   "main": "app.js",
   "dependencies": {
-    "bower": "^1.7.9"
+    "bower": "^1.7.9",
+    "string-to-stream": "^1.1.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

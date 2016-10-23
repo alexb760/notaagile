@@ -29,8 +29,7 @@
                     ctrl.$storage.$reset();
                     $location.path("/login");
 
-                })
-                .then(function (error) {
+                },function (error) {
                     console.log(error);
                     deferred.reject(error);
                 });
