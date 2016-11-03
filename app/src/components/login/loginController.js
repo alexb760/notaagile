@@ -8,9 +8,9 @@
         .module('app')
         .controller('loginController', loginController);
 
-    loginController.$inject = ['$scope', 'config', '$auth', '$location', '$localStorage'];
+    loginController.$inject = ['$scope', 'config', '$auth', '$state', '$localStorage'];
 
-    function loginController($scope, config, $auth, $location, $localStorage) {
+    function loginController($scope, config, $auth, $state, $localStorage) {
         var ctrl = this;
         ctrl.$storage = $localStorage;
         ctrl.login = function (user) {
@@ -19,7 +19,7 @@
                     ctrl.$storage.name = res.data.name;
                     ctrl.$storage.email = res.data.email;
                     ctrl.$storage.menu = res.data.menu;
-                    $location.path("/home");
+                    $state.go("app.home");
                 }
             }, function (res) {
                 console.log(res);

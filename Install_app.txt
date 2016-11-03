@@ -1,9 +1,5 @@
-bower install angular
+npm install
 
-bower install angular-route
+bower install
 
-bower install bootstrap
-
-bower install satellizer
-
-https://uno-de-piera.com/autenticacion-con-jwt-php-y-angularjs/
+gulp

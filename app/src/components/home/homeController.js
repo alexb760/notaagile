@@ -16,24 +16,6 @@
         ctrl.name = ctrl.$storage.name;
         ctrl.email = ctrl.$storage.email;
         ctrl.menu = ctrl.$storage.menu;
-
-        ctrl.logout = function () {
-            var deferred;
-            deferred = $q.defer();
-            $http({
-                method: 'GET',
-                url: config.APIURL + '/logout'
-            })
-                .then(function (res) {
-                    deferred.resolve(res);
-                    ctrl.$storage.$reset();
-                    $location.path("/login");
-
-                },function (error) {
-                    console.log(error);
-                    deferred.reject(error);
-                });
-            return deferred.promise;
-        };
+        
     }
 })();

@@ -4,64 +4,77 @@
 
 (function () {
     angular
-        .module('app', ['ngRoute', 'satellizer', 'ngStorage'])
+        .module('app', ['ui.router', 'satellizer', 'ngStorage'])
 
         .constant('config', {
             APIURL: "http://api.notagile.com"
         })
-        .config(["$routeProvider", "config", "$authProvider", "$locationProvider",
-            function ($routeProvider, config, $authProvider, $locationProvider) {
+        .config(["$stateProvider", "config", "$authProvider", "$locationProvider", "$urlRouterProvider",
+            function ($stateProvider, config, $authProvider, $locationProvider, $urlRouterProvider) {
 
                 //Configuraciones referentes al token
                 $authProvider.httpInterceptor = function () {
                     return true;
                 };
                 $authProvider.loginUrl = config.APIURL + '/login';
-                $authProvider.tokenName = 'token';
                 $authProvider.tokenHeader = 'Authorization';
                 $authProvider.tokenType = 'Bearer';
                 $authProvider.storageType = 'localStorage';
 
-                $routeProvider.when('/', {
-                        redirectTo: "/home"
-                    })
-                    .when("/home", {
-                        templateUrl: 'components/home/home.html',
-                        controller: 'homeController',
-                        authorization: true,
+                //Rutas
+                $urlRouterProvider.otherwise("/home");
+
+                $stateProvider
+                    .state("app", {
+                        name: "app",
+                        templateUrl: 'components/navbar/navbar.html',
+                        controller: 'navbarController',
                         controllerAs: 'ctrl'
                     })
-                    .when("/login", {
+                    .state("app.home", {
+                        name: "home",
+                        url: "/home",
+                        templateUrl: 'components/home/home.html',
+                        controller: 'homeController',
+                        controllerAs: 'ctrl'
+                    })
+                    .state("login", {
+                        url: "/login",
                         templateUrl: 'components/login/login.html',
                         controller: 'loginController',
-                        authorization: false,
                         controllerAs: 'ctrl'
                     });
 
                 $locationProvider.html5Mode(true);
             }])
 
-        .run(["$rootScope", '$location', '$auth',
-            function ($rootScope, $location, $auth) {
-                $rootScope.$on('$routeChangeStart', function (event, next) {
+        .run(["$rootScope", '$auth', '$state',
+            function ($rootScope, $auth, $state) {
+                $rootScope.$on('$stateChangeSuccess', function (event, next) {
 
                     var token = $auth.getToken() || false;
 
                     /*Si la URL a la que se va a acceder es el Login entonces se agrega una clase al body necesaria para
                      la vista del login*/
-                    if (next.originalPath == '/login') {
+                    if (next.url == '/login') {
+                        //Si esta autenticado lo redireccionamos al home
+                        if (token || $auth.isAuthenticated()) {
+                            $state.go("app.home");
+                            return true;
+                        }
+
                         $rootScope.bodyLayout = "login-layout blur-login";
                     } else {
-                        $rootScope.bodyLayout = "";
+                        $rootScope.bodyLayout = "no-skin";
                     }
 
                     //La siguiente condicion controla que el usuario este autenticado, si no lo esta redirecciona al login.
                     if (!token || !$auth.isAuthenticated()) {
-                        $location.path("/login");
+                        $state.go("login");
                         return true;
                     }
 
                 });
 
             }]);
-})(angular);
+})();
