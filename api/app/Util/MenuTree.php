@@ -47,7 +47,7 @@ class MenuTree
 
         return $menuTree;
     }
-    
+
     private static function buildMenuList($userId = null, $profileId = null)
     {
         $menuItemsList = array();
@@ -77,7 +77,7 @@ class MenuTree
             ->toArray();
 
         //Obtengo todos los parent que existen en la aplicacion, nos servirá para construir el menu
-        $parentRoutes = Route::select(['routes.id', 'routes.name', 'label', 'parent_id'])
+        $parentRoutes = Route::select(['routes.id', 'routes.name', 'label', 'parent_id', 'routes.description'])
             ->whereNull('name')
             ->get()
             ->toArray();

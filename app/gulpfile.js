@@ -15,18 +15,18 @@ var gulp = require('gulp'),
 /*
  * Tarea por defecto que inicia el proceso de compilacion.
  */
-gulp.task('default', ['build', 'htmlIndex', 'components', 'assets', 'htaccess']);
+gulp.task('default', ['build', 'htmlIndex', 'components', 'shared', 'assets', 'htaccess']);
 
 
 gulp.task('build', function () {
-    gulp.src(['src/app.js', 'src/components/**/*.js'])
+    gulp.src(['src/app.js', 'src/components/**/*.js', 'src/shared/**/*.js'])
         .pipe(concat('app.js'))
         .pipe(gulp.dest('public/'))
 });
 
 gulp.task('htmlIndex', function () {
     //Moviendo los JS necesarios a la carpeta public
-    gulp.src(['bower_components/**/*.js','bower_components/**/*.map'])
+    gulp.src(['bower_components/**/*.js', 'bower_components/**/*.map', 'bower_components/**/*.css'])
         .pipe(gulp.dest('public/vendors'));
 
     //Injectando las dependencias js al archivo index
@@ -39,6 +39,11 @@ gulp.task('htmlIndex', function () {
 gulp.task('components', function () {
     gulp.src('src/components/**/*.html')
         .pipe(gulp.dest('public/components/'));
+});
+
+gulp.task('shared', function () {
+    gulp.src('src/shared/**/*.html')
+        .pipe(gulp.dest('public/shared/'));
 });
 
 gulp.task('assets', function () {

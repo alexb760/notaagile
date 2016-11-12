@@ -15,6 +15,15 @@
         ctrl.$storage = $localStorage;
         //los mandamos a la vista como user
         ctrl.name = ctrl.$storage.name;
+        ctrl.menu = ctrl.$storage.menu;
+        ctrl.pageHeader = {title: "", description: ""};
+
+        ctrl.setPageHeader = function (item) {
+            if (item.name != null) {
+                ctrl.pageHeader.title = item.label;
+                ctrl.pageHeader.description = item.description;
+            }
+        };
 
         ctrl.logout = function () {
             var deferred;

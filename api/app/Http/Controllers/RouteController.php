@@ -15,7 +15,7 @@ class RouteController extends BaseController
     protected function getRules(Request $request)
     {
         return [
-            "name" => 'required|max:100|alpha',
+            "name" => 'max:100|alpha',
             "description" => 'required|max:255'
         ];
     }
@@ -23,7 +23,6 @@ class RouteController extends BaseController
     protected function getMessages()
     {
         return [
-            "name.required" => "El nombre es requerido",
             "name.alpha" => "El nombre solo debe tener caracteres alfabeticos",
             "name.max" => "El nombre debe ser de maximo :max caracteres",
             "description.required" => "La descripcion es obligatoria",

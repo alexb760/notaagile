@@ -16,6 +16,6 @@
         ctrl.name = ctrl.$storage.name;
         ctrl.email = ctrl.$storage.email;
         ctrl.menu = ctrl.$storage.menu;
-        
     }
+
 })();
