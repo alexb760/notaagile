@@ -135,18 +135,21 @@
                     //Obtengo la tmpTREdit para actualizar su data y pasarla al Datatable que atualice la Row
                     vm.tablaSelector.row(vm.tmpTREdit).data(response).draw();
                     vm.modalSelector.modal('hide');
-                    $.gritter.add({
-                        title: 'Notificación',
-                        text: 'Registro editado correctamente',
-                        class_name: 'gritter-success'
-                    });
+                    mensajePush('Notificación', 'Registro editado correctamente', 'gritter-success');
+
                 }, function (error) {
+                    var mensaje = "";
                     console.log(error);
-                    $.gritter.add({
-                        title: 'Error',
-                        text: 'Ocurrio un error al actualizar los datos',
-                        class_name: 'gritter-error'
-                    });
+                    //Cuando es un error controlado por la api, el mensaje de error llega en un vector de error
+                    if (typeof error.data.error != 'undefined') {
+                        $.each(error.data.error, function ($idx, $value) {
+                            mensaje += $value + "<br>";
+                        });
+                    } else {
+                        mensaje = error.data;
+                    }
+                    mensajePush('Error', mensaje, 'gritter-error');
+
                 });
 
             } else {
@@ -154,19 +157,21 @@
                 resource.save(vm.formModal, function (response) {
                     vm.tablaSelector.row.add(response).draw();
                     vm.modalSelector.modal('hide');
-                    $.gritter.add({
-                        title: 'Notificación',
-                        text: 'Registro creado',
-                        class_name: 'gritter-success'
-                    });
+                    mensajePush('Notificación', 'Registro creado', 'gritter-success');
 
                 }, function (error) {
+                    var mensaje = "";
                     console.log(error);
-                    $.gritter.add({
-                        title: 'Error',
-                        text: 'Ocurrio un error al guardar los datos',
-                        class_name: 'gritter-error'
-                    });
+                    //Cuando es un error controlado por la api, el mensaje de error llega en un vector de error
+                    if (typeof error.data.error != 'undefined') {
+                        $.each(error.data.error, function ($idx, $value) {
+                            console.log($value);
+                            mensaje += $value + "<br>";
+                        });
+                    } else {
+                        mensaje = error.data;
+                    }
+                    mensajePush('Error', mensaje, 'gritter-error');
                 });
             }
         };
@@ -206,6 +211,14 @@
                         class_name: 'gritter-error'
                     });
                 });
+        };
+
+        var mensajePush = function ($tittle, $message, $cssClass) {
+            $.gritter.add({
+                title: $tittle,
+                text: $message,
+                class_name: $cssClass
+            });
         }
     }
 })();
