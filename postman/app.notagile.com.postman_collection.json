@@ -1,0 +1,1278 @@
+{
+	"variables": [],
+	"info": {
+		"name": "app.notagile.com",
+		"_postman_id": "70411887-ed52-24d2-6c41-b2f52b982168",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Alumnos",
+			"description": "",
+			"item": [
+				{
+					"name": "Alumnos",
+					"request": {
+						"url": "http://api.notagile.com/alumno",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "admin",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Post_Alumnos",
+					"request": {
+						"url": "http://api.notagile.com/alumno",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombres",
+									"value": "Victor Andres",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "apellidos",
+									"value": "David Quiñones",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "doc_identificacion",
+									"value": "1151939570",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get_Alumnos",
+					"request": {
+						"url": "http://api.notagile.com/alumno/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Victor Andres David Quiñones",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "usuario",
+									"value": "vdavid",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "passwords",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "email",
+									"value": "vd-victor@hotmail.com",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "isActive",
+									"value": "1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_Alumno",
+					"request": {
+						"url": "http://api.notagile.com/alumno/1",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Put_Alumno",
+					"request": {
+						"url": "http://api.notagile.com/alumno/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nombres",
+									"value": "Victor",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "apellidos",
+									"value": "Quiñones",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "doc_identificacion",
+									"value": "1151939570",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Asignaturas",
+			"description": "",
+			"item": [
+				{
+					"name": "Asignaturas",
+					"request": {
+						"url": "http://api.notagile.com/asignatura",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "admin",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Post_Asignatura",
+					"request": {
+						"url": "http://api.notagile.com/asignatura",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Admin23",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_Asignatura",
+					"request": {
+						"url": "http://api.notagile.com/asignatura/1",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Put_Asignatura",
+					"request": {
+						"url": "http://api.notagile.com/asignatura/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Admin prueba",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"description": "",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (responseCode.code === 200){",
+									"   var jsonData = JSON.parse(responseBody);",
+									"   postman.setEnvironmentVariable(\"token\", jsonData.token); ",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://api.notagile.com/login",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "admin@notagile.com",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"url": "http://api.notagile.com/logout",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "admin",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Renew_Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (responseCode.code === 200){",
+									"   var jsonData = JSON.parse(responseBody);",
+									"   postman.setEnvironmentVariable(\"token\", jsonData.token); ",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://api.notagile.com/renewToken",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "admin",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cursos",
+			"description": "",
+			"item": [
+				{
+					"name": "Cursos",
+					"request": {
+						"url": "http://api.notagile.com/curso",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "admin",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Post_Cursos",
+					"request": {
+						"url": "http://api.notagile.com/curso",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "anio",
+									"value": "2017",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "periodo",
+									"value": "2",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get_Cursos",
+					"request": {
+						"url": "http://api.notagile.com/curso",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Victor Andres David Quiñones",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "usuario",
+									"value": "vdavid",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "passwords",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "email",
+									"value": "vd-victor@hotmail.com",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "isActive",
+									"value": "1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_Cursos",
+					"request": {
+						"url": "http://api.notagile.com/curso/1",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Put_Curso",
+					"request": {
+						"url": "http://api.notagile.com/curso/2",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "anio",
+									"value": "2018",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "periodo",
+									"value": "1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profiles",
+			"description": "",
+			"item": [
+				{
+					"name": "Profiles",
+					"request": {
+						"url": "http://api.notagile.com/profile",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "admin",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Post_Profile",
+					"request": {
+						"url": "http://api.notagile.com/profile",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Admin23",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "description",
+									"value": "Segundo perfil",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_Profile",
+					"request": {
+						"url": "http://api.notagile.com/profile/2",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Put_Profile",
+					"request": {
+						"url": "http://api.notagile.com/profile/2",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "2",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "name",
+									"value": "Admin prueba",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "description",
+									"value": "Es una prueba",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Routes",
+			"description": "",
+			"item": [
+				{
+					"name": "Routes",
+					"request": {
+						"url": "http://api.notagile.com/route",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "admin",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Post_Route",
+					"request": {
+						"url": "http://api.notagile.com/route",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "logout",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "description",
+									"value": "Ruta para el deslogueo de usuarios",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "label",
+									"value": "LOGOUT_LABEL",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "isVisible",
+									"value": "0",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "isParent",
+									"value": "false",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_Route",
+					"request": {
+						"url": "http://api.notagile.com/route/1",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Put_Route",
+					"request": {
+						"url": "http://api.notagile.com/route/2",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "2",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "name",
+									"value": "renewToken",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "description",
+									"value": "Ruta para renovar el token",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserProfiles",
+			"description": "",
+			"item": [
+				{
+					"name": "UsersProfiles",
+					"request": {
+						"url": "http://api.notagile.com/userProfile",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "admin",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Post_UserProfile",
+					"request": {
+						"url": "http://api.notagile.com/userProfile",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "1",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "profile_id",
+									"value": "1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get_UserProfile",
+					"request": {
+						"url": "http://api.notagile.com/userProfile/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Victor Andres David Quiñones",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "usuario",
+									"value": "vdavid",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "passwords",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "email",
+									"value": "vd-victor@hotmail.com",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "isActive",
+									"value": "1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_UserProfile",
+					"request": {
+						"url": "http://api.notagile.com/userProfile/1",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Put_UserProfile",
+					"request": {
+						"url": "http://api.notagile.com/userProfile/2",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "2",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "user_id",
+									"value": "1",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "profile_id",
+									"value": "2",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"description": "",
+			"item": [
+				{
+					"name": "Users",
+					"request": {
+						"url": "http://api.notagile.com/user",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "admin",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Post_User",
+					"request": {
+						"url": "http://api.notagile.com/user",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Victor David Q.",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "email",
+									"value": "vd-victor@hotmail.com",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "secretos",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "isActive",
+									"value": "1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get_User",
+					"request": {
+						"url": "http://api.notagile.com/user/2",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Victor Andres David Quiñones",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "usuario",
+									"value": "vdavid",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "passwords",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "email",
+									"value": "vd-victor@hotmail.com",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "isActive",
+									"value": "1",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_User",
+					"request": {
+						"url": "http://api.notagile.com/user/2",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Put_User",
+					"request": {
+						"url": "http://api.notagile.com/user/5",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "5",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "name",
+									"value": "Victor Andres David",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "isActive",
+									"value": "1",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "email",
+									"value": "vd-victor@hotmail.com",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
