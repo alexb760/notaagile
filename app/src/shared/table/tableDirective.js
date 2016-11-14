@@ -27,7 +27,7 @@
 
         return directive;
 
-        function tableDirectiveLink(scope, elem, attr, vm) {
+        function tableDirectiveLink($scope, elem, attr, vm) {
             $timeout(function () {
                 vm.getData();
 
@@ -37,6 +37,7 @@
                 //Para que cada vez que se cierre el modal se resete el formulario
                 vm.modalSelector.on('hidden.bs.modal', function () {
                     vm.formModal = {};
+                    $scope.$apply();
                 });
 
                 $.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
@@ -60,18 +61,12 @@
                     vm.modalSelector.modal("show");
                 });
 
-                //Cuando se presiona el boton de editar
+                //Cuando se presiona el boton de editar o eliminar
                 $('#table-directive-' + vm.id + ' tbody').on('click', '.dtBtnDirEdit', function () {
-                    var data = vm.tablaSelector.row($(this).parents('tr')).data();
-                    console.log("Editando");
-                    console.log(data);
-                    vm.editarFrm(data);
+                    vm.editarFrm($(this).parents('tr'));
                 }).on('click', '.dtBtnDirDel', function () {
-                    var data = vm.tablaSelector.row($(this).parents('tr')).data();
-                    console.log("Eliminando");
-                    console.log(data);
+                    vm.eliminarRegistro($(this).parents('tr'))
                 });
-
             }, 0);
         }
     }
@@ -80,7 +75,9 @@
     function tableDirectiveController($scope, ResourceService) {
         var vm = this;
         var dtColumns = [];
+        var resource = {};
 
+        vm.tmpTREdit = {};//Varible que guarda temporalmente la TR de la Datatable que se esta editando.
         vm.formIsEdit = true;//Flag que indica que el formulario esta en modo edicion.
         vm.formModal = {};
         vm.ctModel = [];
@@ -129,30 +126,14 @@
 
         //Funcion que se encarga de guardar un registro
         vm.submitFrm = function () {
+            resource = ResourceService.getService(vm.endPoint);
 
             //Reviso si el formulario esta en modo edicion o creación
             if (vm.formIsEdit) {
-                var resource = ResourceService.getService(vm.endPoint);
 
                 resource.update({id: vm.formModal.id}, vm.formModal, function (response) {
-                    //Procedo a buscar el registro en el ctModel y lo actualizo
-                    $.each(vm.ctModel, function ($idx, $value) {
-                        if ($value.id == response.id) {
-                            //para no perder la referencia.
-                            $.each($value, function ($idx2) {
-                                $value[$idx2] = response[$idx2];
-                            });
-                            return true;
-                        }
-                    });
-                    //Esto no se debe hacer... Cuando haya mucha data es mortal!!!!!!!!!!!
-                    var bkCtModel = angular.copy(vm.ctModel);
-                    vm.tablaSelector.clear();
-                    //Restauro la copia
-                    vm.ctModel = angular.copy(bkCtModel);
-                    //Agrego toda la data
-                    vm.tablaSelector.rows.add(vm.ctModel).draw();
-                    bkCtModel = {};
+                    //Obtengo la tmpTREdit para actualizar su data y pasarla al Datatable que atualice la Row
+                    vm.tablaSelector.row(vm.tmpTREdit).data(response).draw();
                     vm.modalSelector.modal('hide');
                     $.gritter.add({
                         title: 'Notificación',
@@ -169,7 +150,6 @@
                 });
 
             } else {
-                var resource = ResourceService.getService(vm.endPoint);
 
                 resource.save(vm.formModal, function (response) {
                     vm.tablaSelector.row.add(response).draw();
@@ -192,7 +172,9 @@
         };
 
         //Funcion que prepara el formulario para editar un registro
-        vm.editarFrm = function (data) {
+        vm.editarFrm = function (trDt) {
+            vm.tmpTREdit = trDt;
+            var data = vm.tablaSelector.row(vm.tmpTREdit).data();
             vm.formIsEdit = true;
             $.each(data, function ($idx, $val) {
                 vm.formModal[$idx] = $val;
@@ -202,8 +184,28 @@
         };
 
         //Funcion que elimina un registro
-        vm.eliminarRegistro = function ($id) {
-            
+        vm.eliminarRegistro = function ($tr) {
+            var data = vm.tablaSelector.row($tr).data();
+            resource = ResourceService.getService(vm.endPoint);
+
+            resource.delete({id: data.id},
+                function ($response) {
+                    //Eliminando la row de la Datatable
+                    vm.tablaSelector.row($tr).remove().draw();
+                    $.gritter.add({
+                        title: 'Notificación',
+                        text: 'Registro eliminado',
+                        class_name: 'gritter-success'
+                    });
+
+                }, function ($error) {
+                    console.log($error);
+                    $.gritter.add({
+                        title: 'Error',
+                        text: 'Ocurrio un error al eliminar el registro',
+                        class_name: 'gritter-error'
+                    });
+                });
         }
     }
 })();
