@@ -49,9 +49,15 @@
                         controller: 'cursoController',
                         controllerAs: 'ctrl'
                     })
+                    .state("app.alumno", {
+                        url: "/alumno",
+                        templateUrl: 'shared/templates/BasicCRUDTemplate.html',
+                        controller: 'alumnoController',
+                        controllerAs: 'ctrl'
+                    })
                     .state("app.404", {
                         url: "/404",
-                        templateUrl: 'components/notfound/notfound.html',
+                        templateUrl: 'components/notfound/notfound.html'
                     })
                     .state("login", {
                         url: "/login",
