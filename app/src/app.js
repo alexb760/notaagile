@@ -39,8 +39,14 @@
                     })
                     .state("app.asignatura", {
                         url: "/asignatura",
-                        templateUrl: 'components/asignatura/asignatura.html',
+                        templateUrl: 'shared/templates/BasicCRUDTemplate.html',
                         controller: 'asignaturaController',
+                        controllerAs: 'ctrl'
+                    })
+                    .state("app.curso", {
+                        url: "/curso",
+                        templateUrl: 'shared/templates/BasicCRUDTemplate.html',
+                        controller: 'cursoController',
                         controllerAs: 'ctrl'
                     })
                     .state("app.404", {

@@ -78,7 +78,7 @@
         var resource = {};
 
         vm.tmpTREdit = {};//Varible que guarda temporalmente la TR de la Datatable que se esta editando.
-        vm.formIsEdit = true;//Flag que indica que el formulario esta en modo edicion.
+        vm.formIsEdit = false;//Flag que indica que el formulario esta en modo edicion.
         vm.formModal = {};
         vm.ctModel = [];
         vm.tablaSelector = {};
